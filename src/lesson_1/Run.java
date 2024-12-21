@@ -10,8 +10,6 @@ public class Run {
     static List<User> users = new ArrayList<>();
     static List<CoworkingSpace> spaces = new ArrayList<>();
     static List<Reservation> reservationList = new ArrayList<>();
-    static String ADMIN = "admin";
-    static String CUSTOMER = "customer";
 
     public static void main(String[] args) {
         User customer = new User("customer", "customer", false);
@@ -33,8 +31,9 @@ public class Run {
                     String login = keyboard.nextLine();
                     System.out.println("Enter Password");
                     String password = keyboard.nextLine();
-                    if (Objects.equals(CheckLogin(login, password), ADMIN)) {
-                        AdminMenu();
+                    User user = checkLogin(login, password);
+                    if (Objects.requireNonNull(user).isAdmin()) {
+                        adminMenu();
                     } else {
                         System.out.println("Invalid Login or Password");
                     }
@@ -44,8 +43,11 @@ public class Run {
                     String login = keyboard.nextLine();
                     System.out.println("Enter Password");
                     String password = keyboard.nextLine();
-                    if (Objects.equals(CheckLogin(login, password), CUSTOMER)) {
-                        CustomerMenu();
+                    User user = checkLogin(login, password);
+                    if (!Objects.requireNonNull(user).isAdmin()) {
+                        customerMenu(user);
+                    } else {
+                        System.out.println("Invalid Login or Password");
                     }
                 }
                 default -> {
@@ -55,20 +57,16 @@ public class Run {
         }
     }
 
-    private static String CheckLogin(String login, String password) {
+    private static User checkLogin(String login, String password) {
         for (User user : users) {
             if (user.getLogin().equals(login) && user.getPassword().equals(password)) {
-                if (user.isAdmin()) {
-                    return ADMIN;
-                } else {
-                    return CUSTOMER;
-                }
+                return user;
             }
         }
         return null;
     }
 
-    private static void AdminMenu() {
+    private static void adminMenu() {
         while (true) {
             System.out.println("Choose one of the following options:");
             System.out.println("1. Add new coworking space");
@@ -87,6 +85,7 @@ public class Run {
                         case "2" -> type = Type.Private;
                         case "3" -> type = Type.Minimal;
                         case "4" -> type = Type.FullService;
+                        default -> System.out.println("Invalid type");
                     }
                     System.out.println("Enter coworking price");
                     double price = Double.parseDouble(keyboard.nextLine());
@@ -101,7 +100,7 @@ public class Run {
                 case "3" -> {
                     System.out.println("Reservations list:");
                     for (Reservation reservation : reservationList) {
-                        reservation.toString();
+                        System.out.println(reservation);
                     }
                 }
                 default -> {
@@ -118,7 +117,7 @@ public class Run {
         }
     }
 
-    private static void CustomerMenu() {
+    private static void customerMenu(User user) {
         while (true) {
             System.out.println("Choose one of the following options:");
             System.out.println("1. Browse available spaces");
@@ -128,35 +127,43 @@ public class Run {
             System.out.println("5. Back");
             switch (keyboard.nextLine()) {
                 case "1" -> {
-                    System.out.println("Enter coworking space name");
-                    String spaceName = keyboard.nextLine();
-                    System.out.println("Choose coworking space type");
-                    printTypes();
-                    Type type = null;
-                    switch (keyboard.nextLine()) {
-                        case "1" -> type = Type.OpenSpace;
-                        case "2" -> type = Type.Private;
-                        case "3" -> type = Type.Minimal;
-                        case "4" -> type = Type.FullService;
+                    System.out.println("List of available spaces:");
+                    for (CoworkingSpace space : spaces) {
+                        if (!space.isReserved()) {
+                            System.out.println(space);
+                        }
                     }
-                    System.out.println("Enter coworking price");
-                    double price = Double.parseDouble(keyboard.nextLine());
-                    CoworkingSpace space = new CoworkingSpace(spaceName, type, price);
-                    spaces.add(space);
                 }
                 case "2" -> {
-                    System.out.println("Choose coworking that you want to delete");
-                    printTypes();
-                    spaces.remove(keyboard.nextInt() - 1);
+                    System.out.println("Enter a coworking space name that you want to reserve");
+                    String spaceName = keyboard.nextLine();
+                    for (CoworkingSpace space : spaces) {
+                        if (space.getName().equals(spaceName) && !space.isReserved()) {
+                            System.out.println("Enter your name");
+                            Reservation reservation = new Reservation(space, user, keyboard.nextLine());
+                            reservationList.add(reservation);
+                            System.out.println("Enter the time you wish to reserve the coworking space");
+                            reservation.setReservationStartTime(keyboard.nextLine());
+                            System.out.println("Enter what time you expect to vacate the coworking space");
+                            reservation.setReservationEndTime(keyboard.nextLine());
+                            System.out.println("Enter reservation date");
+                            reservation.setReservationDate(keyboard.nextLine());
+                            break;
+                        }
+                    }
                 }
                 case "3" -> {
-                    System.out.println("Reservations list:");
+                    System.out.println("Your list of reservations:");
                     for (Reservation reservation : reservationList) {
-                        reservation.toString();
+                        if (user.equals(reservation.getReservee())) {
+                            System.out.println(reservation);
+                        }
                     }
                 }
                 case "4" -> {
-                    System.out.println("Cancel a reservation");
+                    System.out.println("Enter a id of reservation that you want to cancel");
+                    String id = keyboard.nextLine();
+                    reservationList.removeIf(reservation -> id.equals(reservation.getReservationID()));
                 }
                 default -> {
                     return;

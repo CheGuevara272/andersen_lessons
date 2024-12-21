@@ -3,6 +3,7 @@ package lesson_1;
 import java.util.List;
 
 public class User {
+    private String name;
     private String login;
     private String password;
     private boolean admin;
@@ -12,6 +13,14 @@ public class User {
         this.login = login;
         this.password = password;
         this.admin = admin;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getLogin() {

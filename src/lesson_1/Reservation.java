@@ -3,17 +3,37 @@ package lesson_1;
 public class Reservation {
     private String reservationID;
     private CoworkingSpace reservedSpace;
+    private User reservee;
     private String reserveeName;
     private String reservationDate;
     private String reservationStartTime;
     private String reservationEndTime;
 
-    public Reservation(CoworkingSpace reservedSpace, String reserveeName, String reservationDate, String reservationStartTime, String reservationEndTime) {
+    public Reservation(CoworkingSpace reservedSpace, User user, String reserveeName) {
         this.reservationID = generateUniqueId();
         this.reservedSpace = reservedSpace;
+        reservedSpace.setReserved(true);
+        this.reservee = user;
         this.reserveeName = reserveeName;
+    }
+
+    public User getReservee() {
+        return reservee;
+    }
+
+    public String getReservationID() {
+        return reservationID;
+    }
+
+    public void setReservationDate(String reservationDate) {
         this.reservationDate = reservationDate;
+    }
+
+    public void setReservationStartTime(String reservationStartTime) {
         this.reservationStartTime = reservationStartTime;
+    }
+
+    public void setReservationEndTime(String reservationEndTime) {
         this.reservationEndTime = reservationEndTime;
     }
 
