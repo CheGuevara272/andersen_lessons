@@ -4,13 +4,27 @@ import java.util.Date;
 
 public class CoworkingSpace {
     private String name;
-    private boolean reserved;
-    private Date reservationDate;
 
-    CoworkingSpace(String name) {
+    private Type type;
+    private double price;
+    private boolean reserved;
+
+    CoworkingSpace(String name, Type type, double price) {
         this.name = name;
+        this.type = type;
         reserved = false;
-        reservationDate = new Date();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public double getPrice() {
+        return price;
     }
 
     public boolean isReserved() {
@@ -21,13 +35,10 @@ public class CoworkingSpace {
         this.reserved = reserved;
     }
 
-    public Date getReservationDate() {
-        return reservationDate;
+    @Override
+    public String toString() {
+        return "    Name = " + name + '\n' +
+                "    Type=" + type + '\n' +
+                "    Price=" + price;
     }
-
-    public void setReservationDate(Date reservationDate) {
-        this.reservationDate = reservationDate;
-    }
-
-
 }

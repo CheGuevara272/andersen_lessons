@@ -6,7 +6,7 @@ public class User {
     private String login;
     private String password;
     private boolean admin;
-    private List<CoworkingSpace> reservedCoworkingSpace;
+    private List<Reservation> userReservations;
 
     public User(String login, String password, boolean admin) {
         this.login = login;
@@ -25,4 +25,6 @@ public class User {
     public boolean isAdmin() {
         return admin;
     }
+
+
 }
