@@ -1,10 +1,10 @@
 package lesson_1;
 
 public class Reservation {
-    private String reservationID;
-    private CoworkingSpace reservedSpace;
-    private User reservee;
-    private String reserveeName;
+    private final String reservationID;
+    private final CoworkingSpace reservedSpace;
+    private final User reservee;
+    private final String reserveeName;
     private String reservationDate;
     private String reservationStartTime;
     private String reservationEndTime;

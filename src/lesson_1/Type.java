@@ -6,13 +6,15 @@ public enum Type {
     Minimal("Minimal"),
     FullService("Full-service");
 
-    private String typeName;
+    private final String typeName;
 
     Type(String typeName) {
         this.typeName = typeName;
     }
 
-    public String getName() { return this.typeName; }
+    public String getName() {
+        return this.typeName;
+    }
 
     @Override
     public String toString() {

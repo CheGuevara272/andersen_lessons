@@ -4,9 +4,9 @@ import java.util.List;
 
 public class User {
     private String name;
-    private String login;
-    private String password;
-    private boolean admin;
+    private final String login;
+    private final String password;
+    private final boolean admin;
     private List<Reservation> userReservations;
 
     public User(String login, String password, boolean admin) {

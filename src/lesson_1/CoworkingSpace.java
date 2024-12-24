@@ -1,17 +1,16 @@
 package lesson_1;
 
-import java.util.Date;
-
 public class CoworkingSpace {
-    private String name;
+    private final String name;
 
-    private Type type;
+    private final Type type;
     private double price;
     private boolean reserved;
 
     CoworkingSpace(String name, Type type, double price) {
         this.name = name;
         this.type = type;
+        this.price = price;
         reserved = false;
     }
 
@@ -27,8 +26,8 @@ public class CoworkingSpace {
         return price;
     }
 
-    public boolean isReserved() {
-        return reserved;
+    public boolean isNotReserved() {
+        return !reserved;
     }
 
     public void setReserved(boolean reserved) {
@@ -37,8 +36,8 @@ public class CoworkingSpace {
 
     @Override
     public String toString() {
-        return "    Name = " + name + '\n' +
-                "    Type=" + type + '\n' +
-                "    Price=" + price;
+        return "Name = " + name + '\n' +
+                "  Type=" + type + '\n' +
+                "  Price=" + price;
     }
 }
