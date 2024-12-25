@@ -1,7 +1,9 @@
-package lesson_1;
+package andersenProject;
+
+import andersenProject.exception.InputException;
 
 public class CustomerMenu {
-    static void customerMenu(User user) {
+    static void customerMenu(User user) throws InputException {
         boolean operatingMenu = true;
         while (operatingMenu) {
             System.out.println("""
@@ -40,7 +42,7 @@ public class CustomerMenu {
         }
     }
 
-    private static void makeReservation(User user) {
+    private static void makeReservation(User user) throws InputException {
         listOfAvailableSpaces();
         System.out.println("Enter a coworking space name that you want to reserve");
         String spaceName = Run.keyboard.nextLine();
@@ -59,6 +61,8 @@ public class CustomerMenu {
                 System.out.println("Enter reservation date");
                 reservation.setReservationDate(Run.keyboard.nextLine());
                 break;
+            } else {
+                throw new InputException("Coworking space with that name is reserved or does not exist");
             }
         }
     }
@@ -72,10 +76,15 @@ public class CustomerMenu {
         }
     }
 
-    private static void cancelReservation(User user) {
+    private static void cancelReservation(User user) throws InputException {
         listOfReservations(user);
         System.out.println("Enter a id of reservation that you want to cancel");
         String id = Run.keyboard.nextLine();
-        Run.reservationList.removeIf(reservation -> id.equals(reservation.getReservationID()));
+        boolean removed = Run.reservationList.removeIf(reservation -> id.equals(reservation.getReservationID()));
+        if (removed) {
+            System.out.println("Reservation has been cancelled");
+        } else {
+            throw new InputException("Reservation with that id does not exist");
+        }
     }
 }

@@ -1,7 +1,9 @@
-package lesson_1;
+package andersenProject;
+
+import andersenProject.exception.InputException;
 
 public class AdminMenu {
-    static void adminMenu() {
+    static void adminMenu() throws InputException {
         boolean operatingMenu = true;
         while (operatingMenu) {
             System.out.println("""
@@ -27,18 +29,19 @@ public class AdminMenu {
         }
     }
 
-    private static void addNewCoworking() {
+    private static void addNewCoworking() throws InputException {
         System.out.println("Enter coworking space name");
         String spaceName = Run.keyboard.nextLine();
         System.out.println("Choose coworking space type");
         printTypes();
         Type type = null;
+
         switch (Run.keyboard.nextLine()) {
             case "1" -> type = Type.OpenSpace;
             case "2" -> type = Type.Private;
             case "3" -> type = Type.Minimal;
             case "4" -> type = Type.FullService;
-            default -> System.out.println("Invalid type");
+            default -> throw new InputException("Invalid type");
         }
         System.out.println("Enter coworking price");
         double price = Double.parseDouble(Run.keyboard.nextLine());
@@ -46,10 +49,16 @@ public class AdminMenu {
         Run.spaces.add(space);
     }
 
-    private static void removeCoworking() {
+    private static void removeCoworking() throws InputException {
         System.out.println("Choose coworking that you want to delete");
         printCoworkingSpaces();
-        Run.spaces.remove(Run.keyboard.nextInt() - 1);
+        int coworkingNumber = Run.keyboard.nextInt();
+        if (Run.spaces.size() >= coworkingNumber) {
+            Run.spaces.remove(Run.keyboard.nextInt() - 1);
+        } else {
+            throw new InputException("Invalid coworking number");
+        }
+
     }
 
     private static void reservationsList() {
@@ -67,8 +76,10 @@ public class AdminMenu {
     }
 
     private static void printCoworkingSpaces() {
+        int i = 0;
         for (CoworkingSpace space : Run.spaces) {
-            System.out.println("1) " + space);
+            i++;
+            System.out.println(i + ") " + space);
         }
     }
 }

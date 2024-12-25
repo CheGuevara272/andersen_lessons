@@ -1,13 +1,10 @@
-package lesson_1;
-
-import java.util.List;
+package andersenProject;
 
 public class User {
     private String name;
     private final String login;
-    private final String password;
-    private final boolean admin;
-    private List<Reservation> userReservations;
+    private String password;
+    private boolean admin;
 
     public User(String login, String password, boolean admin) {
         this.login = login;
@@ -31,9 +28,15 @@ public class User {
         return password;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public boolean isAdmin() {
         return admin;
     }
 
-
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
+    }
 }

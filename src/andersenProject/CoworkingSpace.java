@@ -1,4 +1,4 @@
-package lesson_1;
+package andersenProject;
 
 public class CoworkingSpace {
     private final String name;
