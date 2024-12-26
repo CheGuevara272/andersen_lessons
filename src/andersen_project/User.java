@@ -1,6 +1,8 @@
-package andersenProject;
+package andersen_project;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     private String name;
     private final String login;
     private String password;

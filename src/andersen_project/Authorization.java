@@ -1,7 +1,7 @@
-package andersenProject;
+package andersen_project;
 
-import andersenProject.exception.AuthorizationException;
-import andersenProject.exception.InputException;
+import andersen_project.exception.AuthorizationException;
+import andersen_project.exception.InputException;
 
 import java.util.Objects;
 
@@ -26,10 +26,8 @@ public class Authorization {
         for (User user : Run.users) {
             if (user.getLogin().equals(login) && user.getPassword().equals(password)) {
                 return user;
-            } else {
-                throw new AuthorizationException("Invalid Login or Password");
             }
         }
-        return null;
+        throw new AuthorizationException("Invalid Login or Password");
     }
 }

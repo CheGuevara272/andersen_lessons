@@ -1,34 +1,24 @@
-package andersenProject;
+package andersen_project;
 
-import andersenProject.exception.InputException;
+import andersen_project.exception.InputException;
 
 public class CustomerMenu {
     static void customerMenu(User user) throws InputException {
         boolean operatingMenu = true;
         while (operatingMenu) {
             System.out.println("""
-                    Choose one of the following options:");
-                     1. Browse available spaces");
-                     2. Make a reservation");
-                     3. View my reservations");
-                     4. Cancel a reservation");
+                    Choose one of the following options:
+                     1. Browse available spaces
+                     2. Make a reservation
+                     3. View my reservations
+                     4. Cancel a reservation
                      5. Back""");
             switch (Run.keyboard.nextLine()) {
-                case "1" -> {
-                    listOfAvailableSpaces();
-                }
-                case "2" -> {
-                    makeReservation(user);
-                }
-                case "3" -> {
-                    listOfReservations(user);
-                }
-                case "4" -> {
-                    cancelReservation(user);
-                }
-                default -> {
-                    operatingMenu = false;
-                }
+                case "1" -> listOfAvailableSpaces();
+                case "2" -> makeReservation(user);
+                case "3" -> listOfReservations(user);
+                case "4" -> cancelReservation(user);
+                default -> operatingMenu = false;
             }
         }
     }

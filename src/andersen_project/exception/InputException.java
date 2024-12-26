@@ -1,4 +1,4 @@
-package andersenProject.exception;
+package andersen_project.exception;
 
 public class InputException extends Exception {
     public InputException() {}

@@ -1,30 +1,22 @@
-package andersenProject;
+package andersen_project;
 
-import andersenProject.exception.InputException;
+import andersen_project.exception.InputException;
 
 public class AdminMenu {
     static void adminMenu() throws InputException {
         boolean operatingMenu = true;
         while (operatingMenu) {
             System.out.println("""
-                    Choose one of the following options:");
+                    Choose one of the following options:
                      1. Add new coworking space
                      2. Remove coworking space
                      3. View all reservations
                      4. Back""");
             switch (Run.keyboard.nextLine()) {
-                case "1" -> {
-                    addNewCoworking();
-                }
-                case "2" -> {
-                    removeCoworking();
-                }
-                case "3" -> {
-                    reservationsList();
-                }
-                default -> {
-                    operatingMenu = false;
-                }
+                case "1" -> addNewCoworking();
+                case "2" -> removeCoworking();
+                case "3" -> reservationsList();
+                default -> operatingMenu = false;
             }
         }
     }
@@ -34,13 +26,13 @@ public class AdminMenu {
         String spaceName = Run.keyboard.nextLine();
         System.out.println("Choose coworking space type");
         printTypes();
-        Type type = null;
+        Type type;
 
         switch (Run.keyboard.nextLine()) {
-            case "1" -> type = Type.OpenSpace;
-            case "2" -> type = Type.Private;
-            case "3" -> type = Type.Minimal;
-            case "4" -> type = Type.FullService;
+            case "1" -> type = Type.OPEN_SPACE;
+            case "2" -> type = Type.PRIVATE;
+            case "3" -> type = Type.MINIMAL;
+            case "4" -> type = Type.FULL_SERVICE;
             default -> throw new InputException("Invalid type");
         }
         System.out.println("Enter coworking price");

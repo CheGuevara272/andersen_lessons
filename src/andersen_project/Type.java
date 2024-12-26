@@ -1,10 +1,10 @@
-package andersenProject;
+package andersen_project;
 
 public enum Type {
-    OpenSpace("Open Space"),
-    Private("Private workspace"),
-    Minimal("Minimal"),
-    FullService("Full-service");
+    OPEN_SPACE("Open Space"),
+    PRIVATE("Private workspace"),
+    MINIMAL("Minimal"),
+    FULL_SERVICE("Full-service");
 
     private final String typeName;
 
