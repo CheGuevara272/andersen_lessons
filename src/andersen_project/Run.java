@@ -19,10 +19,6 @@ public class Run {
 
     public static void main(String[] args) {
         atProgramStart();
-//        User customer = new User("customer", "customer", false);
-//        User admin = new User("admin", "admin", true);
-//        users.add(customer);
-//        users.add(admin);
 
         System.out.println("Welcome to Coworking Space Reservation Application");
         boolean operatingMenu = true;
