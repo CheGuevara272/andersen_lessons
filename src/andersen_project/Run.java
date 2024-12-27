@@ -3,6 +3,8 @@ package andersen_project;
 import andersen_project.exception.AuthorizationException;
 import andersen_project.exception.InputException;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -13,12 +15,24 @@ public class Run {
     static List<CoworkingSpace> spaces = new ArrayList<>();
     static List<Reservation> reservationList = new ArrayList<>();
 
-    static final String USERS_FILE_NAME = "users.ser";
-    static final String COWORKING_FILE_NAME = "coworkingSpaces.ser";
-    static final String RESERVATION_FILE_NAME = "reservations.ser";
-
     public static void main(String[] args) {
-        atProgramStart();
+        ProgramState.atProgramStart();
+
+        String folderPath = "P:\\IdeaProjects\\andersen_lessons\\out\\production\\andersen_lessons";
+        String className = "HelloWorld";
+
+        try {
+            CustomClassLoader classLoader = new CustomClassLoader(folderPath);
+
+            Class<?> loadedClass = classLoader.loadClass(className);
+
+            Object instance = classLoader.loadClass(className);
+
+            Method method = loadedClass.getMethod("printMessage");
+            method.invoke(instance);
+        } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+            System.err.println(e.getMessage());
+        }
 
         System.out.println("Welcome to Coworking Space Reservation Application");
         boolean operatingMenu = true;
@@ -38,19 +52,7 @@ public class Run {
                 System.out.println(e.getMessage());
             }
         }
-        atProgramStop();
-    }
-
-    private static void atProgramStart() {
-        users = ProgramState.loadState(USERS_FILE_NAME);
-        spaces = ProgramState.loadState(COWORKING_FILE_NAME);
-        reservationList = ProgramState.loadState(RESERVATION_FILE_NAME);
-    }
-
-    private static void atProgramStop() {
-        ProgramState.saveState(users, USERS_FILE_NAME);
-        ProgramState.saveState(spaces, COWORKING_FILE_NAME);
-        ProgramState.saveState(reservationList, RESERVATION_FILE_NAME);
+        ProgramState.atProgramStop();
     }
 
 }
