@@ -1,6 +1,8 @@
-package lesson_1;
+package andersen_project;
 
-public class CoworkingSpace {
+import java.io.Serializable;
+
+public class CoworkingSpace implements Serializable {
     private final String name;
 
     private final Type type;

@@ -1,4 +1,4 @@
-package lesson_1;
+package andersen_project;
 
 public class Reservation {
     private final String reservationID;
