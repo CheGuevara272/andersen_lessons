@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/CoworkingRentalApplication.iml" filepath="$PROJECT_DIR$/.idea/modules/CoworkingRentalApplication.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/CoworkingRentalApplication.main.iml" filepath="$PROJECT_DIR$/.idea/modules/CoworkingRentalApplication.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/CoworkingRentalApplication.test.iml" filepath="$PROJECT_DIR$/.idea/modules/CoworkingRentalApplication.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/andersen_lessons.iml" filepath="$PROJECT_DIR$/andersen_lessons.iml" />
     </modules>
   </component>
