@@ -25,11 +25,9 @@ public class CustomerMenu {
 
     private static void listOfAvailableSpaces() {
         System.out.println("List of available spaces:");
-        for (CoworkingSpace space : Run.spaces) {
-            if (space.isNotReserved()) {
-                System.out.println(space);
-            }
-        }
+        Run.spaces.stream()
+                .filter(CoworkingSpace::isNotReserved)
+                .forEach(System.out::println);
     }
 
     private static void makeReservation(User user) throws InputException {
@@ -59,11 +57,9 @@ public class CustomerMenu {
 
     private static void listOfReservations(User user) {
         System.out.println("Your list of reservations:");
-        for (Reservation reservation : Run.reservationList) {
-            if (user.equals(reservation.getReservee())) {
-                System.out.println(reservation);
-            }
-        }
+        Run.reservationList.stream()
+                .filter(u -> u.getReservee().equals(user))
+                .forEach(System.out::println);
     }
 
     private static void cancelReservation(User user) throws InputException {

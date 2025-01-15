@@ -19,7 +19,6 @@ public class Run {
 
     public static void main(String[] args) {
         atProgramStart();
-
         System.out.println("Welcome to Coworking Space Reservation Application");
         boolean operatingMenu = true;
         while (operatingMenu) {
