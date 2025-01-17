@@ -1,4 +1,4 @@
-package andersen_project;
+package org.andersen_project;
 
 public enum Type {
     OPEN_SPACE("Open Space"),
