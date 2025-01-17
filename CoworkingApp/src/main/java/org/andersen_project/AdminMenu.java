@@ -1,6 +1,6 @@
-package andersen_project;
+package org.andersen_project;
 
-import andersen_project.exception.InputException;
+import org.andersen_project.exception.InputException;
 
 public class AdminMenu {
     static void adminMenu() throws InputException {

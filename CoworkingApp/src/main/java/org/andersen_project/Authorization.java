@@ -1,7 +1,7 @@
-package andersen_project;
+package org.andersen_project;
 
-import andersen_project.exception.AuthorizationException;
-import andersen_project.exception.InputException;
+import org.andersen_project.exception.AuthorizationException;
+import org.andersen_project.exception.InputException;
 
 import java.util.Objects;
 
