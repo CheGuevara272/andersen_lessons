@@ -1,4 +1,6 @@
-package org.andersen_project;
+package org.andersen_project.entity;
+
+import org.andersen_project.util.IdGenerator;
 
 public class Reservation {
     private final String reservationID;
@@ -10,7 +12,7 @@ public class Reservation {
     private String reservationEndTime;
 
     public Reservation(CoworkingSpace reservedSpace, User user, String reserveeName) {
-        this.reservationID = generateUniqueId();
+        this.reservationID = IdGenerator.getInstance().generateUniqueId();
         this.reservedSpace = reservedSpace;
         reservedSpace.setReserved(true);
         this.reservee = user;
@@ -35,11 +37,6 @@ public class Reservation {
 
     public void setReservationEndTime(String reservationEndTime) {
         this.reservationEndTime = reservationEndTime;
-    }
-
-    private String generateUniqueId() {
-        long uniqueId = System.currentTimeMillis();
-        return Long.toString(uniqueId);
     }
 
     @Override

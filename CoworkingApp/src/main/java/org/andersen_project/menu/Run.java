@@ -1,7 +1,13 @@
-package org.andersen_project;
+package org.andersen_project.menu;
 
+import org.andersen_project.entity.CoworkingSpace;
+import org.andersen_project.entity.Reservation;
+import org.andersen_project.entity.User;
+import org.andersen_project.entity.UserType;
 import org.andersen_project.exception.AuthorizationException;
 import org.andersen_project.exception.InputException;
+import org.andersen_project.service.Authorization;
+import org.andersen_project.util.ProgramState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +15,7 @@ import java.util.Scanner;
 
 public class Run {
     static Scanner keyboard = new Scanner(System.in);
-    static List<User> users = new ArrayList<>();
+    public static List<User> users = new ArrayList<>();
     static List<CoworkingSpace> spaces = new ArrayList<>();
     static List<Reservation> reservationList = new ArrayList<>();
 
@@ -29,8 +35,8 @@ public class Run {
                      3. Exit""");
             try {
                 switch (keyboard.nextLine()) {
-                    case "1" -> Authorization.authorization(Authorization.ADMIN);
-                    case "2" -> Authorization.authorization(Authorization.CUSTOMER);
+                    case "1" -> Authorization.authorization(UserType.ADMIN);
+                    case "2" -> Authorization.authorization(UserType.CUSTOMER);
                     default -> operatingMenu = false;
                 }
             } catch (AuthorizationException | InputException e) {

@@ -1,9 +1,15 @@
-package org.andersen_project;
+package org.andersen_project.menu;
 
+import org.andersen_project.entity.CoworkingSpace;
+import org.andersen_project.entity.Reservation;
+import org.andersen_project.entity.User;
 import org.andersen_project.exception.InputException;
 
+import java.util.Scanner;
+
 public class CustomerMenu {
-    static void customerMenu(User user) throws InputException {
+    static Scanner keyboard = new Scanner(System.in);
+    public static void customerMenu(User user) throws InputException {
         boolean operatingMenu = true;
         while (operatingMenu) {
             System.out.println("""
@@ -13,7 +19,7 @@ public class CustomerMenu {
                      3. View my reservations
                      4. Cancel a reservation
                      5. Back""");
-            switch (Run.keyboard.nextLine()) {
+            switch (keyboard.nextLine()) {
                 case "1" -> listOfAvailableSpaces();
                 case "2" -> makeReservation(user);
                 case "3" -> listOfReservations(user);
@@ -30,24 +36,24 @@ public class CustomerMenu {
                 .forEach(System.out::println);
     }
 
-    private static void makeReservation(User user) throws InputException {
+    public static void makeReservation(User user) throws InputException {
         listOfAvailableSpaces();
         System.out.println("Enter a coworking space name that you want to reserve");
-        String spaceName = Run.keyboard.nextLine();
+        String spaceName = keyboard.nextLine();
         for (CoworkingSpace space : Run.spaces) {
             if (space.getName().equals(spaceName) && space.isNotReserved()) {
                 System.out.println("Enter your name");
-                Reservation reservation = new Reservation(space, user, Run.keyboard.nextLine());
+                Reservation reservation = new Reservation(space, user, keyboard.nextLine());
                 Run.reservationList.add(reservation);
 
                 System.out.println("Enter the time you wish to reserve the coworking space");
-                reservation.setReservationStartTime(Run.keyboard.nextLine());
+                reservation.setReservationStartTime(keyboard.nextLine());
 
                 System.out.println("Enter what time you expect to vacate the coworking space");
-                reservation.setReservationEndTime(Run.keyboard.nextLine());
+                reservation.setReservationEndTime(keyboard.nextLine());
 
                 System.out.println("Enter reservation date");
-                reservation.setReservationDate(Run.keyboard.nextLine());
+                reservation.setReservationDate(keyboard.nextLine());
                 break;
             } else {
                 throw new InputException("Coworking space with that name is reserved or does not exist");
@@ -62,10 +68,10 @@ public class CustomerMenu {
                 .forEach(System.out::println);
     }
 
-    private static void cancelReservation(User user) throws InputException {
+    public static void cancelReservation(User user) throws InputException {
         listOfReservations(user);
         System.out.println("Enter a id of reservation that you want to cancel");
-        String id = Run.keyboard.nextLine();
+        String id = keyboard.nextLine();
         boolean removed = Run.reservationList.removeIf(reservation -> id.equals(reservation.getReservationID()));
         if (removed) {
             System.out.println("Reservation has been cancelled");

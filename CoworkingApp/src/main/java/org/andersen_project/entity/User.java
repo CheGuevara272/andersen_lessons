@@ -1,4 +1,4 @@
-package org.andersen_project;
+package org.andersen_project.entity;
 
 import java.io.Serializable;
 

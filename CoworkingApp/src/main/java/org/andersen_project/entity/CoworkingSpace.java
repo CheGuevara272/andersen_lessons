@@ -1,17 +1,17 @@
-package org.andersen_project;
+package org.andersen_project.entity;
 
 import java.io.Serializable;
 
 public class CoworkingSpace implements Serializable {
     private final String name;
 
-    private final Type type;
+    private final CoworkingType coworkingType;
     private double price;
     private boolean reserved;
 
-    CoworkingSpace(String name, Type type, double price) {
+    public CoworkingSpace(String name, CoworkingType coworkingType, double price) {
         this.name = name;
-        this.type = type;
+        this.coworkingType = coworkingType;
         this.price = price;
         reserved = false;
     }
@@ -20,8 +20,8 @@ public class CoworkingSpace implements Serializable {
         return name;
     }
 
-    public Type getType() {
-        return type;
+    public CoworkingType getType() {
+        return coworkingType;
     }
 
     public double getPrice() {
@@ -39,7 +39,7 @@ public class CoworkingSpace implements Serializable {
     @Override
     public String toString() {
         return "Name = " + name + '\n' +
-                "  Type=" + type + '\n' +
+                "  Type=" + coworkingType + '\n' +
                 "  Price=" + price;
     }
 }

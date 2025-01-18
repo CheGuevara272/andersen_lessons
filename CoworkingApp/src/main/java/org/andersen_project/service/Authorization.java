@@ -1,23 +1,28 @@
-package org.andersen_project;
+package org.andersen_project.service;
 
+import org.andersen_project.entity.UserType;
+import org.andersen_project.menu.Run;
+import org.andersen_project.entity.User;
 import org.andersen_project.exception.AuthorizationException;
 import org.andersen_project.exception.InputException;
+import org.andersen_project.menu.AdminMenu;
+import org.andersen_project.menu.CustomerMenu;
 
 import java.util.Objects;
+import java.util.Scanner;
 
 public class Authorization {
-    static final String ADMIN = "admin";
-    static final String CUSTOMER = "customer";
 
-    static void authorization(String userType) throws AuthorizationException, InputException {
+    public static void authorization(UserType userType) throws AuthorizationException, InputException {
+        Scanner keyboard = new Scanner(System.in);
         System.out.println("Enter Login");
-        String login = Run.keyboard.nextLine();
+        String login = keyboard.nextLine();
         System.out.println("Enter Password");
-        String password = Run.keyboard.nextLine();
+        String password = keyboard.nextLine();
         User user = checkLogin(login, password);
-        if (userType.equals(ADMIN) && Objects.requireNonNull(user).isAdmin()) {
+        if (userType.equals(UserType.ADMIN) && Objects.requireNonNull(user).isAdmin()) {
                 AdminMenu.adminMenu();
-        } else if (userType.equals(CUSTOMER) && !Objects.requireNonNull(user).isAdmin()) {
+        } else if (userType.equals(UserType.CUSTOMER) && !Objects.requireNonNull(user).isAdmin()) {
                 CustomerMenu.customerMenu(user);
         }
     }
