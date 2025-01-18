@@ -1,11 +1,11 @@
 package org.andersen_project.menu;
 
-import org.andersen_project.entity.CoworkingSpace;
-import org.andersen_project.entity.Reservation;
 import org.andersen_project.entity.User;
 import org.andersen_project.entity.UserType;
 import org.andersen_project.exception.AuthorizationException;
 import org.andersen_project.exception.InputException;
+import org.andersen_project.repository.CoworkingRepository;
+import org.andersen_project.repository.ReservationRepository;
 import org.andersen_project.service.Authorization;
 import org.andersen_project.util.ProgramState;
 
@@ -16,8 +16,6 @@ import java.util.Scanner;
 public class Run {
     static Scanner keyboard = new Scanner(System.in);
     public static List<User> users = new ArrayList<>();
-    static List<CoworkingSpace> spaces = new ArrayList<>();
-    static List<Reservation> reservationList = new ArrayList<>();
 
     static final String USERS_FILE_NAME = "users.ser";
     static final String COWORKING_FILE_NAME = "coworkingSpaces.ser";
@@ -48,14 +46,14 @@ public class Run {
 
     private static void atProgramStart() {
         users = ProgramState.loadState(USERS_FILE_NAME);
-        spaces = ProgramState.loadState(COWORKING_FILE_NAME);
-        reservationList = ProgramState.loadState(RESERVATION_FILE_NAME);
+        CoworkingRepository.spaces = ProgramState.loadState(COWORKING_FILE_NAME);
+        ReservationRepository.reservationList = ProgramState.loadState(RESERVATION_FILE_NAME);
     }
 
     private static void atProgramStop() {
         ProgramState.saveState(users, USERS_FILE_NAME);
-        ProgramState.saveState(spaces, COWORKING_FILE_NAME);
-        ProgramState.saveState(reservationList, RESERVATION_FILE_NAME);
+        ProgramState.saveState(CoworkingRepository.spaces, COWORKING_FILE_NAME);
+        ProgramState.saveState(ReservationRepository.reservationList, RESERVATION_FILE_NAME);
     }
 
 }

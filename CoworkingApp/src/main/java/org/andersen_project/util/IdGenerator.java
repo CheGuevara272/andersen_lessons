@@ -1,5 +1,7 @@
 package org.andersen_project.util;
 
+import java.util.UUID;
+
 public class IdGenerator {
     private static IdGenerator instance = new IdGenerator();
 
@@ -9,8 +11,7 @@ public class IdGenerator {
         return instance;
     }
 
-    public String generateUniqueId() {
-        long uniqueId = System.currentTimeMillis();
-        return Long.toString(uniqueId);
+    public UUID generateUniqueId() {
+        return UUID.randomUUID();
     }
 }

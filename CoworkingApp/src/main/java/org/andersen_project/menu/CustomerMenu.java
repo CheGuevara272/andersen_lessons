@@ -4,8 +4,11 @@ import org.andersen_project.entity.CoworkingSpace;
 import org.andersen_project.entity.Reservation;
 import org.andersen_project.entity.User;
 import org.andersen_project.exception.InputException;
+import org.andersen_project.repository.CoworkingRepository;
+import org.andersen_project.repository.ReservationRepository;
 
 import java.util.Scanner;
+import java.util.UUID;
 
 public class CustomerMenu {
     static Scanner keyboard = new Scanner(System.in);
@@ -31,7 +34,7 @@ public class CustomerMenu {
 
     private static void listOfAvailableSpaces() {
         System.out.println("List of available spaces:");
-        Run.spaces.stream()
+        CoworkingRepository.findAll().stream()
                 .filter(CoworkingSpace::isNotReserved)
                 .forEach(System.out::println);
     }
@@ -40,11 +43,13 @@ public class CustomerMenu {
         listOfAvailableSpaces();
         System.out.println("Enter a coworking space name that you want to reserve");
         String spaceName = keyboard.nextLine();
-        for (CoworkingSpace space : Run.spaces) {
+        for (CoworkingSpace space : CoworkingRepository.findAll()) {
             if (space.getName().equals(spaceName) && space.isNotReserved()) {
                 System.out.println("Enter your name");
-                Reservation reservation = new Reservation(space, user, keyboard.nextLine());
-                Run.reservationList.add(reservation);
+                Reservation reservation = new Reservation(
+                        CoworkingRepository.findByName(space.getName()),
+                        user,
+                        keyboard.nextLine());
 
                 System.out.println("Enter the time you wish to reserve the coworking space");
                 reservation.setReservationStartTime(keyboard.nextLine());
@@ -54,6 +59,8 @@ public class CustomerMenu {
 
                 System.out.println("Enter reservation date");
                 reservation.setReservationDate(keyboard.nextLine());
+
+                ReservationRepository.addReservation(reservation);
                 break;
             } else {
                 throw new InputException("Coworking space with that name is reserved or does not exist");
@@ -63,17 +70,16 @@ public class CustomerMenu {
 
     private static void listOfReservations(User user) {
         System.out.println("Your list of reservations:");
-        Run.reservationList.stream()
-                .filter(u -> u.getReservee().equals(user))
+        ReservationRepository.findAll().stream()
+                .filter(reservation -> reservation.getReservee().equals(user))
                 .forEach(System.out::println);
     }
 
     public static void cancelReservation(User user) throws InputException {
         listOfReservations(user);
         System.out.println("Enter a id of reservation that you want to cancel");
-        String id = keyboard.nextLine();
-        boolean removed = Run.reservationList.removeIf(reservation -> id.equals(reservation.getReservationID()));
-        if (removed) {
+        UUID id = UUID.fromString(keyboard.nextLine());
+        if (ReservationRepository.deleteById(id)) {
             System.out.println("Reservation has been cancelled");
         } else {
             throw new InputException("Reservation with that id does not exist");

@@ -13,7 +13,7 @@ public class CoworkingSpace implements Serializable {
         this.name = name;
         this.coworkingType = coworkingType;
         this.price = price;
-        reserved = false;
+        this.reserved = false;
     }
 
     public String getName() {

@@ -4,6 +4,8 @@ import org.andersen_project.entity.CoworkingType;
 import org.andersen_project.entity.CoworkingSpace;
 import org.andersen_project.entity.Reservation;
 import org.andersen_project.exception.InputException;
+import org.andersen_project.repository.CoworkingRepository;
+import org.andersen_project.repository.ReservationRepository;
 
 import java.util.Scanner;
 
@@ -21,7 +23,7 @@ public class AdminMenu {
             switch (keyboard.nextLine()) {
                 case "1" -> addNewCoworking();
                 case "2" -> removeCoworking();
-                case "3" -> reservationsList();
+                case "3" -> ReservationRepository.findAll().forEach(System.out::println);
                 default -> operatingMenu = false;
             }
         }
@@ -44,25 +46,15 @@ public class AdminMenu {
         System.out.println("Enter coworking price");
         double price = keyboard.nextDouble();
         CoworkingSpace space = new CoworkingSpace(spaceName, coworkingType, price);
-        Run.spaces.add(space);
+        CoworkingRepository.addCoworking(space);
     }
 
     public static void removeCoworking() throws InputException {
-        System.out.println("Choose coworking that you want to delete");
-        printCoworkingSpaces();
-        int coworkingNumber = keyboard.nextInt();
-        if (Run.spaces.size() >= coworkingNumber) {
-            Run.spaces.remove(keyboard.nextInt() - 1);
-        } else {
-            throw new InputException("Invalid coworking number");
-        }
-
-    }
-
-    private static void reservationsList() {
-        System.out.println("Reservations list:");
-        for (Reservation reservation : Run.reservationList) {
-            System.out.println(reservation);
+        System.out.println("Enter name of coworking space that you want to delete");
+        CoworkingRepository.findAll().forEach(System.out::println);
+        String coworkingName = keyboard.nextLine();
+        if (!CoworkingRepository.deleteByName(coworkingName)) {
+            throw new InputException("Invalid coworking name");
         }
     }
 
@@ -70,14 +62,6 @@ public class AdminMenu {
         int i = 0;
         for (CoworkingType coworkingType : CoworkingType.values()) {
             System.out.println(++i + ") " + coworkingType.toString());
-        }
-    }
-
-    private static void printCoworkingSpaces() {
-        int i = 0;
-        for (CoworkingSpace space : Run.spaces) {
-            i++;
-            System.out.println(i + ") " + space);
         }
     }
 }

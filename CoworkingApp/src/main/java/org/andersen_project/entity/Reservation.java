@@ -2,8 +2,10 @@ package org.andersen_project.entity;
 
 import org.andersen_project.util.IdGenerator;
 
+import java.util.UUID;
+
 public class Reservation {
-    private final String reservationID;
+    private final UUID reservationID;
     private final CoworkingSpace reservedSpace;
     private final User reservee;
     private final String reserveeName;
@@ -23,7 +25,7 @@ public class Reservation {
         return reservee;
     }
 
-    public String getReservationID() {
+    public UUID getReservationID() {
         return reservationID;
     }
 
