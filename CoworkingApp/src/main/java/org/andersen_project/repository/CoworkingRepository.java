@@ -3,30 +3,42 @@ package org.andersen_project.repository;
 import org.andersen_project.entity.CoworkingSpace;
 import org.andersen_project.exception.InputException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-public class CoworkingRepository {
-    private static List<CoworkingSpace> spaces = new ArrayList<>();
+public class CoworkingRepository<T extends Serializable> implements Repository<CoworkingSpace> {
+    private final List<CoworkingSpace> coworkingSpaceList = new ArrayList<>();
 
-    public static CoworkingSpace addCoworking(CoworkingSpace space) {
-        spaces.add(space);
-        return space;
+    public CoworkingRepository(List<CoworkingSpace> coworkingSpaceList) {
+        this.coworkingSpaceList.addAll(coworkingSpaceList);
     }
 
-    public static List<CoworkingSpace> findAll() {
-        return new ArrayList<>(spaces);
+    @Override
+    public boolean update(CoworkingSpace space) {
+        return coworkingSpaceList.add(space);
     }
 
-    public static boolean deleteByName(String name) {
-        return spaces.removeIf(space -> space.getName().equals(name));
+    @Override
+    public List<CoworkingSpace> findAll() {
+        List<CoworkingSpace> spaces = new ArrayList<>(coworkingSpaceList);
+        return spaces;
     }
 
-    public static CoworkingSpace findByName(String name) throws InputException {
-        return spaces.stream()
-                .filter(space -> space.getName().equals(name))
+    @Override
+    public CoworkingSpace findById(Integer id) throws InputException {
+        return coworkingSpaceList.stream()
+                .filter(coworkingSpace -> coworkingSpace.getCoworkingId().equals(id))
                 .findFirst()
                 .orElseThrow(() -> new InputException("Coworking space with that name is reserved or does not exist"));
+    }
+
+    @Override
+    public boolean deleteById(Integer id) {
+        return coworkingSpaceList.removeIf(coworkingSpace -> coworkingSpace.getCoworkingId().equals(id));
+    }
+
+    public Integer getLastId() {
+        return coworkingSpaceList.get(coworkingSpaceList.size() - 1).getCoworkingId();
     }
 }

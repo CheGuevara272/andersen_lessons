@@ -1,7 +1,8 @@
 package org.andersen_project.exception;
 
 public class InputException extends Exception {
-    public InputException() {}
+    public InputException() {
+    }
 
     public InputException(String message) {
         super(message);

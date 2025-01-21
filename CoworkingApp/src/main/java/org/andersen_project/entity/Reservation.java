@@ -1,32 +1,27 @@
 package org.andersen_project.entity;
 
-import org.andersen_project.util.IdGenerator;
+import java.io.Serializable;
 
-import java.util.UUID;
-
-public class Reservation {
-    private final UUID reservationID;
-    private final CoworkingSpace reservedSpace;
-    private final User reservee;
-    private final String reserveeName;
+public class Reservation implements Serializable {
+    private final Integer reserveeId;
+    private final Integer reservedSpaceId;
+    private Integer reservationId;
     private String reservationDate;
     private String reservationStartTime;
     private String reservationEndTime;
 
-    public Reservation(CoworkingSpace reservedSpace, User user, String reserveeName) {
-        this.reservationID = IdGenerator.getInstance().generateUniqueId();
-        this.reservedSpace = reservedSpace;
-        reservedSpace.setReserved(true);
-        this.reservee = user;
-        this.reserveeName = reserveeName;
+    public Reservation(Integer reservationId, Integer reserveeId, Integer reservedSpaceId) {
+        this.reservationId = reservationId;
+        this.reserveeId = reserveeId;
+        this.reservedSpaceId = reservedSpaceId;
     }
 
-    public User getReservee() {
-        return reservee;
+    public Integer getReserveeId() {
+        return reserveeId;
     }
 
-    public UUID getReservationID() {
-        return reservationID;
+    public Integer getReservationId() {
+        return reservationId;
     }
 
     public void setReservationDate(String reservationDate) {
@@ -44,9 +39,9 @@ public class Reservation {
     @Override
     public String toString() {
         return "Reservation:" +
-                "  Reservation ID= " + reservationID + '\n' +
-                "  Reserved Space = " + reservedSpace.toString() + '\n' +
-                "  Reservee Name = " + reserveeName + '\n' +
+                "  Reservation ID = " + reservationId + '\n' +
+                "  Reserved Space ID = " + reservedSpaceId + '\n' +
+                "  Reservee ID = " + reserveeId + '\n' +
                 "  Reservation Date = " + reservationDate + '\n' +
                 "  Reservation Start Time = " + reservationStartTime + '\n' +
                 "  Reservation End Time = " + reservationEndTime;
