@@ -2,31 +2,30 @@ package org.andersen_project.entity;
 
 import org.andersen_project.util.IdGenerator;
 
+import java.io.Serializable;
 import java.util.UUID;
 
-public class Reservation {
-    private final UUID reservationID;
+public class Reservation implements Serializable {
     private final CoworkingSpace reservedSpace;
     private final User reservee;
-    private final String reserveeName;
+    private final UUID reservationId;
     private String reservationDate;
     private String reservationStartTime;
     private String reservationEndTime;
 
-    public Reservation(CoworkingSpace reservedSpace, User user, String reserveeName) {
-        this.reservationID = IdGenerator.getInstance().generateUniqueId();
+    public Reservation(CoworkingSpace reservedSpace, User user) {
+        this.reservee = user;
+        this.reservationId = IdGenerator.getInstance().generateUniqueId();
         this.reservedSpace = reservedSpace;
         reservedSpace.setReserved(true);
-        this.reservee = user;
-        this.reserveeName = reserveeName;
     }
 
     public User getReservee() {
         return reservee;
     }
 
-    public UUID getReservationID() {
-        return reservationID;
+    public UUID getReservationId() {
+        return reservationId;
     }
 
     public void setReservationDate(String reservationDate) {
@@ -44,9 +43,9 @@ public class Reservation {
     @Override
     public String toString() {
         return "Reservation:" +
-                "  Reservation ID= " + reservationID + '\n' +
+                "  Reservation ID = " + reservationId + '\n' +
                 "  Reserved Space = " + reservedSpace.toString() + '\n' +
-                "  Reservee Name = " + reserveeName + '\n' +
+                "  Reservee = " + reservee.getName() + '\n' +
                 "  Reservation Date = " + reservationDate + '\n' +
                 "  Reservation Start Time = " + reservationStartTime + '\n' +
                 "  Reservation End Time = " + reservationEndTime;

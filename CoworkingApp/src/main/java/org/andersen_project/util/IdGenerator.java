@@ -3,9 +3,10 @@ package org.andersen_project.util;
 import java.util.UUID;
 
 public class IdGenerator {
-    private static IdGenerator instance = new IdGenerator();
+    private static final IdGenerator instance = new IdGenerator();
 
-    private IdGenerator() {}
+    private IdGenerator() {
+    }
 
     public static IdGenerator getInstance() {
         return instance;

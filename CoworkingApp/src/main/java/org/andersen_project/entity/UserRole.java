@@ -1,12 +1,12 @@
 package org.andersen_project.entity;
 
-public enum UserType {
+public enum UserRole {
     CUSTOMER("customer"),
     ADMIN("admin");
 
     private final String userType;
 
-    UserType(String userType) {
+    UserRole(String userType) {
         this.userType = userType;
     }
 
