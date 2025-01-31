@@ -2,6 +2,7 @@ package org.andersen_project.repository;
 
 import org.andersen_project.entity.User;
 import org.andersen_project.exception.InputException;
+import org.andersen_project.exception.LoginException;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -31,6 +32,13 @@ public class UserRepository<T extends Serializable> implements Repository<User> 
                 .filter(user -> user.getUserId().equals(id))
                 .findFirst()
                 .orElseThrow(() -> new InputException("User not found"));
+    }
+
+    public User findByLogin(String login) throws LoginException {
+        return userList.stream()
+                .filter(user -> user.getLogin().equals(login))
+                .findFirst()
+                .orElseThrow(() -> new LoginException("Wrong login"));
     }
 
     @Override

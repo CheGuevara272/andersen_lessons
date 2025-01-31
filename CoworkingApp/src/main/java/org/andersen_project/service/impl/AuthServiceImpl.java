@@ -28,12 +28,11 @@ public class AuthServiceImpl implements AuthService {
     }
 
     public User checkLogin(String login, String password) throws LoginException {
-        List<User> users = userRepository.findAll();
-        for (User user : users) {
-            if (user.getLogin().equals(login) && user.getPassword().equals(password)) {
-                return user;
-            }
+        User user = userRepository.findByLogin(login);
+        if (user.getPassword().equals(password)) {
+            return user;
+        } else {
+            throw new LoginException("Wrong password");
         }
-        throw new LoginException("Invalid Login or Password");
     }
 }
