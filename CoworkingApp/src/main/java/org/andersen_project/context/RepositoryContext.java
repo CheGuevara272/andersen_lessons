@@ -13,7 +13,7 @@ public class RepositoryContext {
         repositoryMap.put(repository.getClass(), repository);
     }
 
-    public <T extends Serializable> Repository<T> getRepository(Class<?> clazz) {
-        return (Repository<T>) repositoryMap.get(clazz);
+    public <T extends Serializable> Repository<? extends Serializable> getRepository(Class<?> clazz) {
+        return repositoryMap.get(clazz);
     }
 }

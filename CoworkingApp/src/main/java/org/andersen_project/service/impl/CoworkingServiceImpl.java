@@ -51,9 +51,14 @@ public class CoworkingServiceImpl implements CoworkingService {
 
         System.out.println("Enter coworking price");
         double price = keyboard.nextDouble();
-        Integer id = coworkingRepository.getLastId() + 1;
-        CoworkingSpace space = new CoworkingSpace(id, spaceName, coworkingType, price);
-        return coworkingRepository.update(space);
+        CoworkingSpace space = CoworkingSpace.builder()
+                .coworkingId(0)
+                .coworkingName(spaceName)
+                .coworkingType(coworkingType)
+                .price(price)
+                .build();
+        coworkingRepository.update(space);
+        return true;
     }
 
     @Override
@@ -62,11 +67,13 @@ public class CoworkingServiceImpl implements CoworkingService {
         System.out.println("Enter name of coworking space that you want to delete");
         coworkingRepository.findAll().forEach(System.out::println);
         Integer coworkingId = keyboard.nextInt();
-        if (coworkingRepository.deleteById(coworkingId)) {
-            return true;
-        } else {
-            throw new InputException("Invalid coworking name");
+
+        boolean result = false;
+        if (coworkingRepository.findById(coworkingId).isPresent()) {
+            result = true;
         }
+        coworkingRepository.deleteById(coworkingId);
+        return result;
     }
 
     @Override
@@ -77,7 +84,7 @@ public class CoworkingServiceImpl implements CoworkingService {
     @Override
     public List<CoworkingSpace> getAvailableCoworkingSpaces() {
         List<CoworkingSpace> availableCoworkingSpaces = coworkingRepository.findAll();
-        return availableCoworkingSpaces.stream().filter(CoworkingSpace::isNotReserved).toList();
+        return availableCoworkingSpaces.stream().filter(coworkingSpace -> !coworkingSpace.isReserved()).toList();
     }
 
     private void printTypes() {

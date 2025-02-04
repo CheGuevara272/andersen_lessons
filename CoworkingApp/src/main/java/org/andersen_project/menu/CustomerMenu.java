@@ -55,11 +55,8 @@ public class CustomerMenu {
         listOfReservations(user);
         System.out.println("Enter a id of reservation that you want to cancel");
         Integer id = keyboard.nextInt();
-        if (reservationService.cancelReservation(id)) {
-            System.out.println("Reservation has been cancelled");
-        } else {
-            throw new InputException("Reservation with that id does not exist");
-        }
+        reservationService.cancelReservation(id);
+        System.out.println("Reservation has been cancelled");
     }
 
     public void makeReservation(User user) throws InputException {

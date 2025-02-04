@@ -1,49 +1,34 @@
 package org.andersen_project.entity;
 
+import jakarta.persistence.*;
+import lombok.*;
+
 import java.io.Serializable;
+import java.time.LocalDate;
 
+@Entity
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@EqualsAndHashCode
+@Builder
 public class Reservation implements Serializable {
-    private final Integer reserveeId;
-    private final Integer reservedSpaceId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer reservationId;
-    private String reservationDate;
-    private String reservationStartTime;
-    private String reservationEndTime;
 
-    public Reservation(Integer reservationId, Integer reserveeId, Integer reservedSpaceId) {
-        this.reservationId = reservationId;
-        this.reserveeId = reserveeId;
-        this.reservedSpaceId = reservedSpaceId;
-    }
+    @Setter
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    public Integer getReserveeId() {
-        return reserveeId;
-    }
+    @OneToOne
+    private CoworkingSpace space;
 
-    public Integer getReservationId() {
-        return reservationId;
-    }
+    @Setter
+    private LocalDate reservationStartDate;
+    @Setter
+    private LocalDate reservationEndDate;
 
-    public void setReservationDate(String reservationDate) {
-        this.reservationDate = reservationDate;
-    }
-
-    public void setReservationStartTime(String reservationStartTime) {
-        this.reservationStartTime = reservationStartTime;
-    }
-
-    public void setReservationEndTime(String reservationEndTime) {
-        this.reservationEndTime = reservationEndTime;
-    }
-
-    @Override
-    public String toString() {
-        return "Reservation:" +
-                "  Reservation ID = " + reservationId + '\n' +
-                "  Reserved Space ID = " + reservedSpaceId + '\n' +
-                "  Reservee ID = " + reserveeId + '\n' +
-                "  Reservation Date = " + reservationDate + '\n' +
-                "  Reservation Start Time = " + reservationStartTime + '\n' +
-                "  Reservation End Time = " + reservationEndTime;
-    }
 }

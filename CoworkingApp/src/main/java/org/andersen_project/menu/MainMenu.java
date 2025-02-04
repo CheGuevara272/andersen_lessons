@@ -32,12 +32,12 @@ public class MainMenu {
             try {
                 if (keyboard.nextLine().equals("1")) {
                     user = authService.authorization();
+                    switch (user.getUserRole()) {
+                        case CUSTOMER -> new CustomerMenu(repositoryContext).run(user);
+                        case ADMIN -> new AdminMenu(repositoryContext).run(user);
+                    }
                 } else {
                     operatingMenu = false;
-                }
-                switch (user.getRole()) {
-                    case CUSTOMER -> new CustomerMenu(repositoryContext).run(user);
-                    case ADMIN -> new AdminMenu(repositoryContext).run(user);
                 }
             } catch (LoginException | InputException e) {
                 System.out.println(e.getMessage());

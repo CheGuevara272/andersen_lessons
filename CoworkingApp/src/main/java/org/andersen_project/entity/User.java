@@ -1,51 +1,32 @@
 package org.andersen_project.entity;
 
-import java.io.Serializable;
+import jakarta.persistence.*;
+import lombok.*;
 
+import java.io.Serializable;
+import java.util.Set;
+
+@Entity
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@EqualsAndHashCode
+@Builder
 public class User implements Serializable {
-    private final String login;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer userId;
-    private String name;
+
+    private String login;
+
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "ENUM('ADMIN', 'CUSTOMER')")
     private UserRole userRole;
 
-    public User(Integer userId, String name, String login, String password, UserRole userRole) {
-        this.userId = userId;
-        this.name = name;
-        this.login = login;
-        this.password = password;
-        this.userRole = userRole;
-    }
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Reservation> reservationSet;
 
-    public UserRole getRole() {
-        return userRole;
-    }
-
-    public void getRole(UserRole userRole) {
-        this.userRole = userRole;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }
