@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "reservations")
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,19 +17,22 @@ import java.time.LocalDate;
 public class Reservation implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "reservation_id")
     private Integer reservationId;
 
     @Setter
     @OneToOne
-    @JoinColumn(name = "user_id")
     private User user;
 
     @OneToOne
     private CoworkingSpace space;
 
     @Setter
+    @Column(name = "startDate")
     private LocalDate reservationStartDate;
+
     @Setter
+    @Column(name = "endDate")
     private LocalDate reservationEndDate;
 
 }

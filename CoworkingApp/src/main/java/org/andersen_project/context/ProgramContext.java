@@ -35,7 +35,7 @@ public class ProgramContext {
     }
 
     public static <T> void saveContext(List<T> listToSave, String fileName) {
-        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
             oos.writeObject(listToSave);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -46,7 +46,7 @@ public class ProgramContext {
 
     public static <T> List<T> loadContext(String fileName) {
         List<T> loadedList = null;
-        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
             loadedList = (List<T>) ois.readObject();
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);

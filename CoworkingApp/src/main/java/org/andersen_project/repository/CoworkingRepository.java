@@ -1,7 +1,6 @@
 package org.andersen_project.repository;
 
 import org.andersen_project.entity.CoworkingSpace;
-import org.andersen_project.entity.User;
 import org.hibernate.SessionFactory;
 
 import java.io.Serializable;
@@ -13,7 +12,7 @@ public class CoworkingRepository extends HibernateRepository<CoworkingSpace> imp
         super(sessionFactory, entityClass);
     }
 
-    public Optional<CoworkingSpace> findByName(String name){
+    public Optional<CoworkingSpace> findByName(String name) {
         List<CoworkingSpace> spaces = this.findAll();
         return spaces.stream()
                 .filter(coworkingSpace -> coworkingSpace.getCoworkingName().equals(name))

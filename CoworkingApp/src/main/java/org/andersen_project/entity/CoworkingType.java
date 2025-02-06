@@ -1,7 +1,7 @@
 package org.andersen_project.entity;
 
 public enum CoworkingType {
-    OPEN_SPACE("Open Space"),
+    OPEN_SPACE("Open space"),
     PRIVATE("Private workspace"),
     MINIMAL("Minimal"),
     FULL_SERVICE("Full-service");

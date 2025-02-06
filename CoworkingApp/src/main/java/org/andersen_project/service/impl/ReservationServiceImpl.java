@@ -8,7 +8,6 @@ import org.andersen_project.repository.CoworkingRepository;
 import org.andersen_project.repository.ReservationRepository;
 import org.andersen_project.service.ReservationService;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;

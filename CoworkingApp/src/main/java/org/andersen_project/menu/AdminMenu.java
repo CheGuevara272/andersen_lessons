@@ -1,7 +1,6 @@
 package org.andersen_project.menu;
 
 import org.andersen_project.context.RepositoryContext;
-import org.andersen_project.entity.CoworkingSpace;
 import org.andersen_project.entity.User;
 import org.andersen_project.exception.InputException;
 import org.andersen_project.repository.CoworkingRepository;
