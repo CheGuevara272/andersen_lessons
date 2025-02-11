@@ -2,6 +2,8 @@ package org.andersen_project.repository;
 
 import org.andersen_project.entity.User;
 import org.hibernate.SessionFactory;
+import org.andersen_project.exception.InputException;
+import org.andersen_project.exception.LoginException;
 
 import java.util.List;
 import java.util.Optional;

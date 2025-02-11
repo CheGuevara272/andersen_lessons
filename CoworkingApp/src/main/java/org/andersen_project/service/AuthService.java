@@ -7,5 +7,5 @@ import org.andersen_project.exception.LoginException;
 public interface AuthService {
     User authorization() throws LoginException, InputException;
 
-    User checkLogin(String login, String password) throws LoginException;
+    User checkLogin(String login, String password) throws LoginException, InputException;
 }
