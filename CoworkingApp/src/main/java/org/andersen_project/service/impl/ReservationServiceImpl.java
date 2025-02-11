@@ -7,15 +7,19 @@ import org.andersen_project.exception.InputException;
 import org.andersen_project.repository.CoworkingRepository;
 import org.andersen_project.repository.ReservationRepository;
 import org.andersen_project.service.ReservationService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
+@Service
 public class ReservationServiceImpl implements ReservationService {
     private final ReservationRepository reservationRepository;
     private final CoworkingRepository coworkingRepository;
 
+    @Autowired
     public ReservationServiceImpl(ReservationRepository reservationRepository, CoworkingRepository coworkingRepository) {
         this.reservationRepository = reservationRepository;
         this.coworkingRepository = coworkingRepository;

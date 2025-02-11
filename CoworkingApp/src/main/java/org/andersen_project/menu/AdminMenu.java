@@ -7,20 +7,21 @@ import org.andersen_project.repository.CoworkingRepository;
 import org.andersen_project.repository.ReservationRepository;
 import org.andersen_project.service.impl.CoworkingServiceImpl;
 import org.andersen_project.service.impl.ReservationServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import java.util.Scanner;
 
+@Controller
 public class AdminMenu {
     static Scanner keyboard = new Scanner(System.in);
     private final CoworkingServiceImpl coworkingService;
     private final ReservationServiceImpl reservationService;
 
-    public AdminMenu(RepositoryContext repositoryContext) {
-        CoworkingRepository coworkingRepository = (CoworkingRepository) repositoryContext.getRepository(CoworkingRepository.class);
-        ReservationRepository reservationRepository = (ReservationRepository) repositoryContext.getRepository(ReservationRepository.class);
-
-        this.coworkingService = new CoworkingServiceImpl(reservationRepository, coworkingRepository);
-        this.reservationService = new ReservationServiceImpl(reservationRepository, coworkingRepository);
+    @Autowired
+    public AdminMenu(CoworkingServiceImpl coworkingService, ReservationServiceImpl reservationService) {
+        this.coworkingService = coworkingService;
+        this.reservationService = reservationService;
     }
 
     public void run(User user) throws InputException {

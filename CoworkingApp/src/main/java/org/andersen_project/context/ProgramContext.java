@@ -1,5 +1,9 @@
 package org.andersen_project.context;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.andersen_project.entity.CoworkingSpace;
 import org.andersen_project.entity.Reservation;
 import org.andersen_project.entity.User;
@@ -12,6 +16,10 @@ import org.hibernate.cfg.Configuration;
 import java.io.*;
 import java.util.List;
 
+
+@Getter
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ProgramContext {
     private RepositoryContext context;
 
@@ -20,9 +28,9 @@ public class ProgramContext {
         RepositoryContext context = new RepositoryContext();
 
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-        UserRepository userRepository = new UserRepository(sessionFactory, User.class);
-        ReservationRepository reservationRepository = new ReservationRepository(sessionFactory, Reservation.class);
-        CoworkingRepository coworkingRepository = new CoworkingRepository(sessionFactory, CoworkingSpace.class);
+        UserRepository userRepository = new UserRepository(sessionFactory);
+        ReservationRepository reservationRepository = new ReservationRepository(sessionFactory);
+        CoworkingRepository coworkingRepository = new CoworkingRepository(sessionFactory);
 
         context.putRepository(userRepository);
         context.putRepository(reservationRepository);

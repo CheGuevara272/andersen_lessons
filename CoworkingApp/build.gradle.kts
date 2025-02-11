@@ -10,6 +10,7 @@ repositories {
 }
 
 dependencies {
+    implementation("org.springframework:spring-context:6.1.0")
     implementation("org.postgresql:postgresql:42.7.5")
     implementation("org.hibernate.orm:hibernate-core:6.6.6.Final")
     compileOnly("org.projectlombok:lombok:1.18.36")
