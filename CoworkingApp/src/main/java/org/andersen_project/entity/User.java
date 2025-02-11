@@ -1,51 +1,38 @@
 package org.andersen_project.entity;
 
-import java.io.Serializable;
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.Check;
 
+import java.io.Serializable;
+import java.util.Set;
+
+@Entity
+@Table(name = "users")
+@Check(constraints = "user_role IN ('ADMIN', 'CUSTOMER')")
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@EqualsAndHashCode
+@Builder
 public class User implements Serializable {
-    private final String login;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "user_id")
     private Integer userId;
-    private String name;
+
+    @Column(name = "login")
+    private String login;
+
+    @Column(name = "password")
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "user_role", columnDefinition = "VARCHAR(20)")
     private UserRole userRole;
 
-    public User(Integer userId, String name, String login, String password, UserRole userRole) {
-        this.userId = userId;
-        this.name = name;
-        this.login = login;
-        this.password = password;
-        this.userRole = userRole;
-    }
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Reservation> reservationSet;
 
-    public UserRole getRole() {
-        return userRole;
-    }
-
-    public void getRole(UserRole userRole) {
-        this.userRole = userRole;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

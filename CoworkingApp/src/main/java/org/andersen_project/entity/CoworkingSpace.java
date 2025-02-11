@@ -1,51 +1,42 @@
 package org.andersen_project.entity;
 
-import java.io.Serializable;
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.Check;
 
+import java.io.Serializable;
+import java.util.Set;
+
+@Entity
+@Table(name = "coworkings")
+@Check(constraints = "coworking_type IN ('Open space', 'Private workspace', 'Minimal', 'Full-service')")
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@EqualsAndHashCode
+@Builder
 public class CoworkingSpace implements Serializable {
-    private final String name;
-    private final CoworkingType coworkingType;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "native")
+    @Column(name = "coworking_id", nullable = false)
     private Integer coworkingId;
+
+    @Column(name = "coworking_name")
+    private String coworkingName;
+
+    @Column(name = "price")
     private double price;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "coworking_type", columnDefinition = "VARCHAR(20)")
+    private CoworkingType coworkingType;
+
+    @Setter
+    @Column(name = "reserved")
     private boolean reserved;
 
-    public CoworkingSpace(Integer coworkingId, String name, CoworkingType coworkingType, double price) {
-        this.coworkingId = coworkingId;
-        this.name = name;
-        this.coworkingType = coworkingType;
-        this.price = price;
-        this.reserved = false;
-    }
+    @OneToMany
+    private Set<Reservation> reservations;
 
-    public Integer getCoworkingId() {
-        return coworkingId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public CoworkingType getType() {
-        return coworkingType;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public boolean isNotReserved() {
-        return !reserved;
-    }
-
-    public void setReserved(boolean reserved) {
-        this.reserved = reserved;
-    }
-
-    @Override
-    public String toString() {
-        return "Name = " + name + '\n' +
-                "  Id = " + coworkingId + '\n' +
-                "  Type=" + coworkingType + '\n' +
-                "  Price=" + price;
-    }
 }

@@ -48,8 +48,7 @@ public class AdminMenu {
     }
 
     public void removeCoworking() throws InputException {
-        if (coworkingService.removeCoworking()) {
-            System.out.println("Coworking removed");
-        }
+        coworkingService.removeCoworking();
+        System.out.println("Coworking removed");
     }
 }

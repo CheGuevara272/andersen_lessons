@@ -4,15 +4,14 @@ import org.andersen_project.exception.InputException;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 
 public interface Repository<T extends Serializable> {
-    boolean update(T item);
+    void update(T item);
 
     List<T> findAll();
 
-    T findById(Integer id) throws InputException;
+    Optional<T> findById(Integer id) throws InputException;
 
-    //    T findByName(String name) throws InputException;
-    boolean deleteById(Integer id);
-//    boolean deleteByName(String name);
+    void deleteById(Integer id);
 }
