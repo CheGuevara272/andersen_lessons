@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Available Spaces</title>
+</head>
+<body>
+<h1>Available Coworking Spaces</h1>
+<ul>
+    <li th:each="space : ${spaces}">
+        <span th:text="${space.name}"></span> -
+        <span th:text="${space.description}"></span>
+    </li>
+</ul>
+<a th:href="@{/customer/dashboard}">Back to Dashboard</a>
+</body>
+</html>

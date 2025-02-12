@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Coworking Space Reservation</title>
+</head>
+<body>
+<h1>Welcome to Coworking Space Reservation Application</h1>
+
+<div th:if="${errorMessage}" style="color: red">
+  <span th:text="${errorMessage}"></span>
+</div>
+
+<form th:action="@{/login}" method="post" th:object="${loginRequest}">
+  <input type="email" th:field="*{email}" placeholder="Email">
+  <input type="password" th:field="*{password}" placeholder="Password">
+  <button type="submit">Login</button>
+</form>
+
+<form th:action="@{/logout}" method="post">
+  <button type="submit">Exit</button>
+</form>
+</body>
+</html>

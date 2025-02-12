@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>My Reservations</title>
+</head>
+<body>
+<h1>Your Reservations</h1>
+<div th:if="${error}" style="color: red">
+  <span th:text="${error}"></span>
+</div>
+<div th:if="${success}" style="color: green">
+  <span th:text="${success}"></span>
+</div>
+
+<table>
+  <tr th:each="reservation : ${reservations}">
+    <td th:text="${reservation.id}"></td>
+    <td th:text="${reservation.spaceName}"></td>
+    <td th:text="${reservation.status}"></td>
+    <td>
+      <form th:action="@{/customer/reservations/{id}/cancel(id=${reservation.id})}"
+            method="post">
+        <button type="submit">Cancel</button>
+      </form>
+    </td>
+  </tr>
+</table>
+<a th:href="@{/customer/dashboard}">Back to Dashboard</a>
+</body>
+</html>
