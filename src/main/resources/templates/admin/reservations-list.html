@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>All Reservations</title>
+</head>
+<body>
+<h1>All Reservations</h1>
+<table>
+    <tr th:each="reservation : ${reservations}">
+        <td th:text="${reservation.id}"></td>
+        <td th:text="${reservation.user.name}"></td>
+        <td th:text="${reservation.space.name}"></td>
+        <td th:text="${reservation.status}"></td>
+    </tr>
+</table>
+<a th:href="@{/admin/dashboard}">Back to Dashboard</a>
+</body>
+</html>

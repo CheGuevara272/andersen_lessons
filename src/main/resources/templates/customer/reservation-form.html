@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>New Reservation</title>
+</head>
+<body>
+<h1>New Reservation</h1>
+<form th:action="@{/customer/reservations}" method="post" th:object="${reservationRequest}">
+    <select th:field="*{spaceName}">
+        <option th:each="space : ${spaces}"
+                th:value="${space.name}"
+                th:text="${space.name}"></option>
+    </select>
+    <button type="submit">Reserve</button>
+</form>
+</body>
+</html>
