@@ -22,7 +22,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public User authorization(String login, String password) throws LoginException, InputException {
-        List<User> usersList = userRepository.findByName(login);
+        List<User> usersList = userRepository.findByLogin(login);
         for (User user : usersList) {
             if (user.getPassword().equals(password)) {
                 return user;

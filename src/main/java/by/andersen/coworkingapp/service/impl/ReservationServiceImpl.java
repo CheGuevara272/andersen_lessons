@@ -45,7 +45,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public boolean makeReservation(User user, String coworkingName) {
-        List<CoworkingSpace> coworkingsList = coworkingSpaceRepository.findByName(coworkingName);
+        List<CoworkingSpace> coworkingsList = coworkingSpaceRepository.findByCoworkingName(coworkingName);
         if (coworkingsList.isEmpty()) {
             return false;
         }
