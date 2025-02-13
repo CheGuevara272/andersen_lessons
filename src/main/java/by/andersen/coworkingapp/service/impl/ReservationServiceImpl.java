@@ -4,7 +4,7 @@ import by.andersen.coworkingapp.exception.InputException;
 import by.andersen.coworkingapp.model.entity.CoworkingSpace;
 import by.andersen.coworkingapp.model.entity.Reservation;
 import by.andersen.coworkingapp.model.entity.User;
-import by.andersen.coworkingapp.repository.CoworkingRepository;
+import by.andersen.coworkingapp.repository.CoworkingSpaceRepository;
 import by.andersen.coworkingapp.repository.ReservationRepository;
 import by.andersen.coworkingapp.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +16,12 @@ import java.util.Optional;
 @Service
 public class ReservationServiceImpl implements ReservationService {
     private final ReservationRepository reservationRepository;
-    private final CoworkingRepository coworkingRepository;
+    private final CoworkingSpaceRepository coworkingSpaceRepository;
 
     @Autowired
-    public ReservationServiceImpl(ReservationRepository reservationRepository, CoworkingRepository coworkingRepository) {
+    public ReservationServiceImpl(ReservationRepository reservationRepository, CoworkingSpaceRepository coworkingSpaceRepository) {
         this.reservationRepository = reservationRepository;
-        this.coworkingRepository = coworkingRepository;
+        this.coworkingSpaceRepository = coworkingSpaceRepository;
     }
 
     @Override
@@ -45,19 +45,19 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public boolean makeReservation(User user, String coworkingName) {
-        Optional<CoworkingSpace> optionalCoworkingSpace = coworkingRepository.findByName(coworkingName);
-        if (optionalCoworkingSpace.isEmpty()) {
+        List<CoworkingSpace> coworkingsList = coworkingSpaceRepository.findByName(coworkingName);
+        if (coworkingsList.isEmpty()) {
             return false;
         }
 
-        CoworkingSpace coworkingSpace = optionalCoworkingSpace.get();
+        CoworkingSpace coworkingSpace = coworkingsList.get(0);
         Reservation reservation = Reservation.builder()
                 .reservationId(0)
                 .user(user)
                 .space(coworkingSpace)
                 .build();
 
-        reservationRepository.update(reservation);
+        reservationRepository.save(reservation);
         return true;
     }
 }
