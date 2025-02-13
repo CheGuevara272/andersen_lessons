@@ -5,20 +5,30 @@ import org.andersen_project.entity.User;
 import org.andersen_project.exception.InputException;
 import org.andersen_project.exception.LoginException;
 import org.andersen_project.repository.UserRepository;
+import org.andersen_project.service.AuthService;
 import org.andersen_project.service.impl.AuthServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import java.util.Scanner;
 
+@Controller
 public class MainMenu {
-    static Scanner keyboard = new Scanner(System.in);
-    private final RepositoryContext repositoryContext;
+    //private final RepositoryContext repositoryContext;
 
+    private final AuthServiceImpl authService;
+    private final AdminMenu adminMenu;
+    private final CustomerMenu customerMenu;
 
-    public MainMenu(RepositoryContext repositoryContext) {
-        this.repositoryContext = repositoryContext;
+    @Autowired
+    public MainMenu(AuthServiceImpl authService, AdminMenu adminMenu, CustomerMenu customerMenu) {
+        this.authService = authService;
+        this.adminMenu = adminMenu;
+        this.customerMenu = customerMenu;
     }
 
     public void run() {
+        Scanner keyboard = new Scanner(System.in);
         System.out.println("Welcome to Coworking Space Reservation Application");
         boolean operatingMenu = true;
         while (operatingMenu) {
@@ -26,15 +36,15 @@ public class MainMenu {
                     Choose one of the following options:
                      1. Login
                      2. Exit""");
-            AuthServiceImpl authService = new AuthServiceImpl((UserRepository) repositoryContext.getRepository(UserRepository.class));
+            //AuthServiceImpl authService = new AuthServiceImpl((UserRepository) repositoryContext.getRepository(UserRepository.class));
             User user = null;
 
             try {
                 if (keyboard.nextLine().equals("1")) {
                     user = authService.authorization();
                     switch (user.getUserRole()) {
-                        case CUSTOMER -> new CustomerMenu(repositoryContext).run(user);
-                        case ADMIN -> new AdminMenu(repositoryContext).run(user);
+                        case CUSTOMER -> customerMenu.run(user);
+                        case ADMIN -> adminMenu.run(user);
                     }
                 } else {
                     operatingMenu = false;

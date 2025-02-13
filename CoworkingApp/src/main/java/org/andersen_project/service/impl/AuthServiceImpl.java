@@ -5,13 +5,17 @@ import org.andersen_project.exception.InputException;
 import org.andersen_project.exception.LoginException;
 import org.andersen_project.repository.UserRepository;
 import org.andersen_project.service.AuthService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
+@Service
 public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepository;
 
+    @Autowired
     public AuthServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
@@ -23,13 +27,18 @@ public class AuthServiceImpl implements AuthService {
         String login = keyboard.nextLine();
         System.out.println("Enter Password");
         String password = keyboard.nextLine();
-        User user = checkLogin(login, password);
-        return user;
+        Optional<User> optionalUser = checkLogin(login, password);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            return user;
+        } else {
+            throw new LoginException("Invalid Login");
+        }
     }
 
-    public User checkLogin(String login, String password) throws LoginException {
-        User user = userRepository.findByLogin(login);
-        if (user.getPassword().equals(password)) {
+    public Optional<User> checkLogin(String login, String password) throws LoginException {
+        Optional<User> user = userRepository.findByLogin(login);
+        if (user.isPresent() && user.get().getPassword().equals(password)) {
             return user;
         } else {
             throw new LoginException("Wrong password");

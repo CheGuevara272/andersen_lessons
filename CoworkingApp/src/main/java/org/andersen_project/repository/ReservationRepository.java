@@ -2,13 +2,17 @@ package org.andersen_project.repository;
 
 import org.andersen_project.entity.Reservation;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Repository
 public class ReservationRepository extends HibernateRepository<Reservation> {
-    public ReservationRepository(SessionFactory sessionFactory, Class<Reservation> entityClass) {
-        super(sessionFactory, entityClass);
+    @Autowired
+    public ReservationRepository(SessionFactory sessionFactory) {
+        super(sessionFactory, Reservation.class);
     }
 
     public List<Reservation> findReservationsByReserveeId(Integer reserveeId) {
