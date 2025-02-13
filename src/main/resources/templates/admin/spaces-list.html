@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Manage Spaces</title>
+</head>
+<body>
+<h1>All Coworking Spaces</h1>
+
+<div th:if="${error}" style="color: red">
+    <span th:text="${error}"></span>
+</div>
+
+<table>
+    <tr th:each="space : ${spaces}">
+        <td th:text="${space.id}"></td>
+        <td th:text="${space.name}"></td>
+        <td th:text="${space.description}"></td>
+        <td>
+            <form th:action="@{/admin/spaces/{id}/delete(id=${space.id})}"
+                  method="post">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+</table>
+<a th:href="@{/admin/dashboard}">Back to Dashboard</a>
+</body>
+</html>

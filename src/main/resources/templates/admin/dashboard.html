@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Admin Dashboard</title>
+</head>
+<body>
+<h1>Welcome Admin, <span th:text="${user.name}"></span></h1>
+
+<div th:if="${success}" style="color: green">
+  <span th:text="${success}"></span>
+</div>
+
+<nav>
+  <a th:href="@{/admin/spaces/new}">Add New Space</a>
+  <a th:href="@{/admin/spaces}">Manage Spaces</a>
+  <a th:href="@{/admin/reservations}">View All Reservations</a>
+  <a th:href="@{/logout}">Logout</a>
+</nav>
+</body>
+</html>

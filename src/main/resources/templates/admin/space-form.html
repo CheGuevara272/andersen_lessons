@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add New Space</title>
+    <style>
+        .error { color: red; }
+    </style>
+</head>
+<body>
+<h1>New Coworking Space</h1>
+
+<div th:if="${error}" class="error" th:text="${error}"></div>
+
+<form th:action="@{/admin/spaces}" method="post" th:object="${spaceRequest}">
+    <div>
+        <label>Space Name:</label>
+        <input type="text" th:field="*{coworkingName}" placeholder="Enter space name">
+        <span th:if="${#fields.hasErrors('coworkingName')}"
+              th:errors="*{coworkingName}"
+              class="error"></span>
+    </div>
+
+    <div>
+        <label>Price:</label>
+        <input type="number" step="0.01" th:field="*{price}" placeholder="Enter price">
+        <span th:if="${#fields.hasErrors('price')}"
+              th:errors="*{price}"
+              class="error"></span>
+    </div>
+
+    <div>
+        <label>Space Type:</label>
+        <select th:field="*{coworkingType}">
+            <option value="">Select type</option>
+            <option th:each="type : ${T(com.yourpackage.model.CoworkingType).values()}"
+                    th:value="${type}"
+                    th:text="${type}"></option>
+        </select>
+        <span th:if="${#fields.hasErrors('coworkingType')}"
+              th:errors="*{coworkingType}"
+              class="error"></span>
+    </div>
+
+    <button type="submit">Add Space</button>
+</form>
+
+<a th:href="@{/admin/spaces}">Back to Spaces List</a>
+</body>
+</html>
