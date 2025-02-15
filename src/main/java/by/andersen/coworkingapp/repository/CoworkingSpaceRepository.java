@@ -9,5 +9,6 @@ import java.util.List;
 @Repository
 public interface CoworkingSpaceRepository extends JpaRepository<CoworkingSpace, Integer> {
     List<CoworkingSpace> findByCoworkingName(String coworkingName);
+
     List<CoworkingSpace> findByReservedFalse();
 }

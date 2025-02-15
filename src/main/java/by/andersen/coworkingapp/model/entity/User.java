@@ -12,6 +12,7 @@ import java.util.Set;
 @Table(name = "users")
 @Check(constraints = "user_role IN ('ADMIN', 'CUSTOMER')")
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -23,10 +24,10 @@ public class User implements Serializable {
     @Column(name = "user_id")
     private Integer userId;
 
-    @Column(name = "login")
+    @Column(name = "login", unique = true, nullable = false)
     private String login;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)
@@ -36,4 +37,12 @@ public class User implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Reservation> reservationSet;
 
+    @Column(name = "enabled")
+    private boolean enabled = true;
+    @Column(name = "locked")
+    private boolean locked = false;
+    @Column(name = "account_expired")
+    private boolean accountExpired = false;
+    @Column(name = "credentials_expired")
+    private boolean credentialsExpired = false;
 }
