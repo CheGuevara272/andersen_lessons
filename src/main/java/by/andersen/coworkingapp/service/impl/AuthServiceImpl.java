@@ -8,6 +8,7 @@ import by.andersen.coworkingapp.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,12 +22,14 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public User authorization(String login, String password) throws LoginException, InputException {
-        Optional<User> optionalUser = userRepository.findByLogin(login);
-        if (optionalUser.isPresent() && optionalUser.get().getPassword().equals(password)) {
-            User user = optionalUser.get();
-            return user;
-        } else {
-            throw new LoginException("Invalid Login");
+        List<User> usersList = userRepository.findByLogin(login);
+        for (User user : usersList) {
+            if (user.getPassword().equals(password)) {
+                return user;
+            } else {
+                throw new LoginException("Invalid Login");
+            }
         }
+        return null;
     }
 }
