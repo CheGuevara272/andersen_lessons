@@ -31,10 +31,7 @@ public class CoworkingServiceImpl implements CoworkingService {
 
     @Override
     public boolean removeCoworking(Integer coworkingId) throws InputException {
-        boolean result = false;
-        if (coworkingSpaceRepository.findById(coworkingId).isPresent()) {
-            result = true;
-        }
+        boolean result = coworkingSpaceRepository.findById(coworkingId).isPresent();
         coworkingSpaceRepository.deleteById(coworkingId);
         return result;
     }
