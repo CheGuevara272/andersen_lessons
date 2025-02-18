@@ -1,8 +1,8 @@
 package by.andersen.coworkingapp.model.enums;
 
 public enum UserRole {
-    CUSTOMER("customer"),
-    ADMIN("admin");
+    CUSTOMER("CUSTOMER"),
+    ADMIN("ADMIN");
 
     private final String userRole;
 

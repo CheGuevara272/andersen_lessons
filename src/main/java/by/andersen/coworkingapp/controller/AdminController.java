@@ -4,10 +4,12 @@ import by.andersen.coworkingapp.exception.InputException;
 import by.andersen.coworkingapp.model.dto.CoworkingSpaceRequest;
 import by.andersen.coworkingapp.model.entity.User;
 import by.andersen.coworkingapp.model.enums.CoworkingType;
+import by.andersen.coworkingapp.security.SecurityUser;
 import by.andersen.coworkingapp.service.CoworkingService;
 import by.andersen.coworkingapp.service.ReservationService;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,9 +29,16 @@ public class AdminController {
     }
 
     @GetMapping("/dashboard")
-    public String adminDashboard(Model model, HttpSession session) {
-        User user = (User) session.getAttribute("currentUser");
-        model.addAttribute("user", user);
+    public String adminDashboard(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.getPrincipal() instanceof SecurityUser securityUser) {
+            User user = securityUser.getUser();
+            model.addAttribute("user", user);
+        } else {
+            return "redirect:/login";
+        }
+
         return "admin/dashboard";
     }
 

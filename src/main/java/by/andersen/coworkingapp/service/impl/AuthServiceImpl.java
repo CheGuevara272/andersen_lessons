@@ -3,6 +3,7 @@ package by.andersen.coworkingapp.service.impl;
 import by.andersen.coworkingapp.exception.LoginException;
 import by.andersen.coworkingapp.model.dto.RegistrationRequest;
 import by.andersen.coworkingapp.model.entity.User;
+import by.andersen.coworkingapp.model.enums.UserRole;
 import by.andersen.coworkingapp.repository.UserRepository;
 import by.andersen.coworkingapp.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,7 @@ public class AuthServiceImpl implements AuthService {
         User user = new User();
         user.setLogin(dto.getLogin());
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        user.setUserRole(dto.getUserRole());
         userRepository.save(user);
     }
 }

@@ -3,10 +3,12 @@ package by.andersen.coworkingapp.controller;
 import by.andersen.coworkingapp.exception.InputException;
 import by.andersen.coworkingapp.model.dto.ReservationRequest;
 import by.andersen.coworkingapp.model.entity.User;
+import by.andersen.coworkingapp.security.SecurityUser;
 import by.andersen.coworkingapp.service.CoworkingService;
 import by.andersen.coworkingapp.service.ReservationService;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,8 +28,11 @@ public class CustomerController {
     }
 
     @GetMapping("/dashboard")
-    public String customerDashboard(Model model, HttpSession session) {
-        User user = (User) session.getAttribute("currentUser");
+    public String customerDashboard(Model model) {
+        User user = getCurrentUser();
+        if (user == null) {
+            return "redirect:/login";
+        }
         model.addAttribute("user", user);
         return "customer/dashboard";
     }
@@ -47,10 +52,12 @@ public class CustomerController {
 
     @PostMapping("/reservations")
     public String createReservation(@ModelAttribute ReservationRequest request,
-                                    HttpSession session,
                                     RedirectAttributes redirectAttributes) {
         try {
-            User user = (User) session.getAttribute("currentUser");
+            User user = getCurrentUser();
+            if (user == null) {
+                return "redirect:/login";
+            }
             reservationService.makeReservation(user, request.getSpaceName());
             redirectAttributes.addFlashAttribute("success", "Reservation created successfully");
         } catch (InputException e) {
@@ -60,8 +67,11 @@ public class CustomerController {
     }
 
     @GetMapping("/reservations")
-    public String listUserReservations(Model model, HttpSession session) {
-        User user = (User) session.getAttribute("currentUser");
+    public String listUserReservations(Model model) {
+        User user = getCurrentUser();
+        if (user == null) {
+            return "redirect:/login";
+        }
         model.addAttribute("reservations", reservationService.getUserReservations(user.getUserId()));
         return "customer/reservations-list";
     }
@@ -76,5 +86,13 @@ public class CustomerController {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
         return "redirect:/customer/reservations";
+    }
+
+    private User getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof SecurityUser securityUser) {
+            return securityUser.getUser();
+        }
+        return null;
     }
 }

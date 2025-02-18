@@ -4,7 +4,7 @@
   <title>Admin Dashboard</title>
 </head>
 <body>
-<h1>Welcome Admin, <span th:text="${user.name}"></span></h1>
+<h1>Welcome Admin, <span th:text="${user.login}"></span></h1>
 
 <div th:if="${success}" style="color: green">
   <span th:text="${success}"></span>

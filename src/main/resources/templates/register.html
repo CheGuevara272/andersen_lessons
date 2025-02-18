@@ -2,6 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Registration</title>
+    <style>
+        .role-group {
+            margin: 15px 0;
+        }
+        .role-option {
+            margin-right: 20px;
+        }
+        .role-option input[type="radio"] {
+            margin-right: 5px;
+        }
+    </style>
 </head>
 <body>
 <h1>Register</h1>
@@ -12,6 +23,19 @@
 
     <input type="text" th:field="*{login}" placeholder="Login">
     <input type="password" th:field="*{password}" placeholder="Password">
+
+    <div class="role-group">
+        <label>Select Role:</label>
+        <div class="role-option">
+            <input type="radio" th:field="*{userRole}" value="ADMIN" id="adminRole" required>
+            <label for="adminRole">Administrator</label>
+        </div>
+        <div class="role-option">
+            <input type="radio" th:field="*{userRole}" value="CUSTOMER" id="customerRole">
+            <label for="customerRole">Customer</label>
+        </div>
+    </div>
+
     <button type="submit">Register</button>
 </form>
 </body>

@@ -1,5 +1,6 @@
 package by.andersen.coworkingapp.config;
 
+import by.andersen.coworkingapp.security.handler.RoleBasedAuthenticationSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,9 +15,11 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     private final UserDetailsService userDetailsService;
+    private final RoleBasedAuthenticationSuccessHandler successHandler;
 
     public SecurityConfig(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
+        this.successHandler = new RoleBasedAuthenticationSuccessHandler();
     }
 
     @Bean
@@ -31,7 +34,7 @@ public class SecurityConfig {
                 .formLogin(form -> form
                         .loginPage("/login")
                         .loginProcessingUrl("/perform-login")
-                        .defaultSuccessUrl("/dashboard")
+                        .successHandler(successHandler)
                         .failureUrl("/login?error=true")
                 )
                 .logout(logout -> logout
